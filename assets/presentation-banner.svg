@@ -1,0 +1,25 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#22C55E"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+  <circle cx="1010" cy="110" r="92" fill="#1D4ED8" fill-opacity="0.35"/>
+  <circle cx="930" cy="230" r="64" fill="#06B6D4" fill-opacity="0.25"/>
+  <text x="72" y="132" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700">
+    Products Microservice
+  </text>
+  <text x="72" y="184" fill="#BFDBFE" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="500">
+    Spring Boot · Java 25 · JWT · MySQL · JPA
+  </text>
+  <rect x="72" y="214" width="420" height="54" rx="12" fill="url(#accent)"/>
+  <text x="94" y="248" fill="#0B1120" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">
+    Backend Portfolio Project
+  </text>
+</svg>
