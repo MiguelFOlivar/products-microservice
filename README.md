@@ -3,7 +3,7 @@
 ![Banner del proyecto](./assets/presentation-banner.svg)
 
 [![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.x-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![JWT](https://img.shields.io/badge/Security-JWT-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 [![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![JPA](https://img.shields.io/badge/Persistence-JPA-59666C)](https://jakarta.ee/specifications/persistence/)
