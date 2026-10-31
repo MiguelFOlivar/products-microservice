@@ -21,6 +21,8 @@ public record ProductRequest(
         @Min(value = 0, message = "El stock no puede ser negativo")
         Integer stock,
 
+        Boolean active, //Opcional por si en Admin quiere activar o desactivar un producto
+
         @NotNull(message = "La categoria es obligatoria")
         @Positive(message = "El Id de la categoría debe ser positivo")
         Long categoryId
