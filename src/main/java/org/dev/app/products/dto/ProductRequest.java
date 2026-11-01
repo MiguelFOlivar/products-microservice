@@ -14,7 +14,7 @@ public record ProductRequest(
 
         @NotNull(message = "El precio es obligatorio")
         @DecimalMin(value = "0.01", message = "El precio debe ser mayor que 0")
-        @Digits(integer = 8, fraction = 2, message = "El precio debe tener máximo 8 digitos enteros y 2 decimales")
+        @Digits(integer = 8, fraction = 2, message = "El precio debe tener máximo 8 dígitos enteros y 2 decimales")
         BigDecimal price,
 
         @NotNull(message = "El stock es obligatorio")
