@@ -22,11 +22,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_AI_STUDIO__GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-          # Usamos el modelo compatible directo de LiteLLM sin sub-rutas complejas
-          model: "gemini/gemini-1.5-flash"
-          fallback_models: '["gemini/gemini-1.5-flash"]'
+          # Forzado estricto por variable de entorno (anula el archivo TOML si falla)
+          CONFIG__MODEL: "gemini/gemini-2.5-flash"
+          CONFIG__FALLBACK_MODELS: '["gemini/gemini-2.5-flash"]'
 
-          # Una sola llamada optimizada
-          github_action.auto_review: "true"
-          github_action.auto_describe: "false"
-          github_action.auto_improve: "false"
+          # Acciones automáticas unificadas
+          GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"
+          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false"
+          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"
