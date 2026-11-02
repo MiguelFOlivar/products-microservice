@@ -23,17 +23,20 @@ jobs:
           # Token nativo de GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # CONFIGURACIÓN CORRECTA DE CREDENCIALES PARA GEMINI
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI.KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENAI.API_TYPE: "gemini"
-          OPENAI.MODEL: "gemini-2.5-flash"
+          # Configuración de modelo Gemini (recomendada por PR-Agent)
+          GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          config.model: "gemini/gemini-2.5-flash"
           CONFIG.RESPONSE_LANGUAGE: "es-ES"
+          config.publish_output: "true"
+          github.publish_as_check_run: "false"
 
           # Automatizaciones nativas encendidas
           github_action_config.auto_review: "true"
           github_action_config.auto_describe: "true"
           github_action_config.auto_improve: "true"
+          github_action_config.pr_actions: '["opened", "reopened", "ready_for_review", "synchronize"]'
+          github_action_config.handle_push_trigger: "true"
+          github_action_config.push_commands: '["/describe", "/review", "/improve"]'
 
           # Configuración del Comportamiento de Sugerencias
           PR_CODE_SUGGESTIONS.COMMITTABLE_CODE_SUGGESTIONS: "true"
