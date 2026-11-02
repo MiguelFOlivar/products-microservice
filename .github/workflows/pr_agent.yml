@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.event.sender.type != 'Bot' }}
     steps:
       - name: PR Agent action
-        uses: the-pr-agent/pr-agent@main
+        uses: qodo-ai/pr-agent@main
         env:
           # Token nativo de GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
