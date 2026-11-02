@@ -1,4 +1,4 @@
-name: PR-Agent Gemini Automático
+name: PR-Agent Gemini Automático (Optimizado Gratis)
 
 on:
   pull_request:
@@ -8,7 +8,6 @@ jobs:
   pr_agent_job:
     if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
-    # 🚨 SOLUCIÓN AL ERROR 403: Forzamos permisos máximos para que el contenedor pueda leer y escribir comentarios
     permissions:
       issues: write
       pull-requests: write
@@ -22,11 +21,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_AI_STUDIO__GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-          # Forzado estricto por variable de entorno (anula el archivo TOML si falla)
-          CONFIG__MODEL: "gemini/gemini-2.5-flash"
-          CONFIG__FALLBACK_MODELS: '["gemini/gemini-2.5-flash"]'
+          # Modelo estable de alta compatibilidad de cuota
+          CONFIG__MODEL: "gemini/gemini-1.5-flash"
+          CONFIG__FALLBACK_MODELS: '["gemini/gemini-1.5-flash"]'
 
-          # Acciones automáticas unificadas
+          # 🔥 SINTAXIS CORREGIDA: Doble guion bajo y mayúsculas obligatorias
           GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"
           GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false"
           GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"
