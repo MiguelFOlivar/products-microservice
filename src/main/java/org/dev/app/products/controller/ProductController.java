@@ -35,7 +35,6 @@ public class ProductController {
         return ResponseEntity.status(HttpsURLConnection.HTTP_CREATED).body(productService.create(request));
     }
 
-    //usamos valid para que se tomen en cuenta las anotaciones en nuestro dto
     @PutMapping
     public ResponseEntity<ProductResponse> update(@RequestParam Long id,@Valid @RequestBody ProductRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(productService.update(id,request));
