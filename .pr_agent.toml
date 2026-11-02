@@ -1,0 +1,31 @@
+[config]
+model = "gemini/gemini-2.5-flash"
+fallback_models = ["gemini/gemini-2.5-flash"]
+
+[pr_agent]
+fallback_user_language = "es"
+
+[pr_reviewer]
+# Publica los resultados de manera automatizada al abrir el PR
+publish_output = true
+enable_rest_ness = false
+enable_security_analysis = true
+require_tests_analysis = false
+
+# Reglas de diseño Java / Spring Boot 3.x
+extra_instructions = """
+Eres un arquitecto de software senior experto en Java 21 y Spring Boot 3.x. Al revisar los Pull Requests de forma automática, debes auditar estrictamente lo siguiente:
+1. Inyección de Dependencias: No permitas el uso de '@Autowired' en campos o variables. Exige inyección por constructor (preferiblemente usando '@RequiredArgsConstructor' de Lombok).
+2. Capa de Servicios: Verifica que los métodos de escritura/actualización tengan '@Transactional' configurado de manera correcta.
+3. Modernidad de Java: Sugerir el uso de características modernas como Java Streams, Records (para DTOs), bloques de texto y Pattern Matching si simplifican la lectura.
+4. Seguridad (Spring Security): Detectar vulnerabilidades comunes como endpoints desprotegidos o exposición directa de entidades JPA en controladores (exige DTOs).
+5. Control de Excepciones: Valida que los errores se manejen de forma globalizada con '@ControllerAdvice' y '@ExceptionHandler', evitando bloques try-catch vacíos o 'e.printStackTrace()'.
+6. Logging: Asegura el uso de SLF4J (vía '@Slf4j' de Lombok) en lugar de 'System.out.println'.
+"""
+
+[pr_code_suggestions]
+# Forzamos un límite bajo de sugerencias críticas para proteger tu cuota gratuita de tokens por minuto
+num_code_suggestions = 3
+# Permite aplicar los parches con un solo clic directamente desde la UI de GitHub ("Apply Change")
+committable_code_suggestions = true
+
