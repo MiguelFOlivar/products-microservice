@@ -1,16 +1,19 @@
 [config]
-model = "gemini/gemini-2.5-flash"
-fallback_models = ["gemini/gemini-2.5-flash"]
+# Cambiado a la versión recomendada por el error de la API
+model = "gemini/gemini-3.8-flash"
+fallback_models = ["gemini/gemini-3.8-flash"]
 
 [pr_agent]
 fallback_user_language = "es"
 
 [pr_reviewer]
-# Publica los resultados de manera automatizada al abrir el PR
 publish_output = true
 enable_rest_ness = false
 enable_security_analysis = true
 require_tests_analysis = false
+
+# ... El resto de tus extra_instructions de Java/Spring Boot se quedan igual
+
 
 # Reglas de diseño Java / Spring Boot 3.x
 extra_instructions = """
