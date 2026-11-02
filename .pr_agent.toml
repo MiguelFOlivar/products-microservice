@@ -1,27 +1,22 @@
 [config]
 model = "gemini/gemini-3.8-flash"
 fallback_models = ["gemini/gemini-3.8-flash"]
-# Forzamos a LiteLLM a no enviar solicitudes de alta demanda de procesamiento
-reasoning_effort = "low"
 
 [pr_agent]
 fallback_user_language = "es"
-max_shared_output_tokens = 2500 # Controla el tamaño de la respuesta para no agotar tokens de salida
 
 [pr_reviewer]
 publish_output = true
 enable_rest_ness = false
 enable_security_analysis = true
 require_tests_analysis = false
-inline_comments_threshold = 0.0 # Asegura que pinte comentarios en el código si hay fallas
+inline_comments_threshold = 0.0
 
 [pr_code_suggestions]
-# Nos da un máximo de 3 sugerencias con código corregido interactivo dentro de la misma llamada
 num_code_suggestions = 3
 committable_code_suggestions = true
 
 [ignore]
-# Bloqueamos archivos que consumen miles de tokens innecesariamente
 ignored_files = [
     "*.md",
     "pom.xml",
@@ -40,7 +35,7 @@ Tu tarea es auditar estrictamente el Pull Request.
 OBLIGATORIO: Debes dejar un comentario educativo e interactivo si detectas violaciones a estas 6 reglas:
 1. Inyección de Dependencias: No permitas '@Autowired' en campos. Exige inyección por constructor o '@RequiredArgsConstructor' de Lombok.
 2. Capa de Servicios: Exige el uso correcto de '@Transactional' en métodos de escritura/actualización.
-3. Modernidad de Java: Sugiere el uso de Java Streams, Records (para DTOs), bloques de texto y Pattern Matching si simplifican el código.
+3. Modernidad de Java: Sugere el uso de Java Streams, Records (para DTOs), bloques de texto y Pattern Matching si simplifican el código.
 4. Seguridad: Detecta endpoints desprotegidos o exposición directa de entidades JPA en controladores (exige DTOs).
 5. Control de Excepciones: Valida manejo global con '@ControllerAdvice' y '@ExceptionHandler'. Prohibido bloques try-catch vacíos o 'e.printStackTrace()'.
 6. Logging: Exige el uso de SLF4J ('@Slf4j' de Lombok) en lugar de 'System.out.println'.
