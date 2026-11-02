@@ -10,6 +10,7 @@ permissions:
   issues: write
   pull-requests: write
   contents: write
+  statuses: write
 
 jobs:
   pr_agent_job:
@@ -18,30 +19,25 @@ jobs:
     if: ${{ github.event.sender.type != 'Bot' }}
     steps:
       - name: PR Agent action
-        uses: qodo-ai/pr-agent@main
+        uses: the-pr-agent/pr-agent@main
         env:
-          # Token nativo de GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # Configuración de modelo Gemini (recomendada por PR-Agent)
+          # MODELO ESTÁNDAR COMPATIBLE POR DEFECTO (Soluciona el error MAX_TOKENS)
+          config.model: "gemini/gemini-pro"
+          config.fallback_models: '["gemini/gemini-pro"]'
           GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          config.model: "gemini/gemini-2.5-flash"
           CONFIG.RESPONSE_LANGUAGE: "es-ES"
-          config.publish_output: "true"
-          github.publish_as_check_run: "false"
 
-          # Automatizaciones nativas encendidas
+          # Automatizaciones base balanceadas
           github_action_config.auto_review: "true"
-          github_action_config.auto_describe: "true"
-          github_action_config.auto_improve: "true"
-          github_action_config.pr_actions: '["opened", "reopened", "ready_for_review", "synchronize"]'
-          github_action_config.handle_push_trigger: "true"
-          github_action_config.push_commands: '["/describe", "/review", "/improve"]'
+          github_action_config.auto_describe: "false"
+          github_action_config.auto_improve: "false"
 
           # Configuración del Comportamiento de Sugerencias
           PR_CODE_SUGGESTIONS.COMMITTABLE_CODE_SUGGESTIONS: "true"
-          PR_CODE_SUGGESTIONS.NUM_CODE_SUGGESTIONS: "4"
-          PR_REVIEWER.ENABLE_REVIEW_LABELS_EFFORT: "true"
+          PR_CODE_SUGGESTIONS.NUM_CODE_SUGGESTIONS: "3"
+          PR_REVIEWER.ENABLE_REVIEW_LABELS_EFFORT: "false"
           PR_REVIEWER.REQUIRE_REVIEWS_TO_PASS: "false"
 
           # Instrucciones del Mentor de Portafolio (Java 25 + MySQL + Capas)
