@@ -1,34 +1,27 @@
 [config]
-# Cambiado a la versión recomendada por el error de la API
-model = "gemini/gemini-3.8-flash"
-fallback_models = ["gemini/gemini-3.8-flash"]
+# Modelo corregido según el requerimiento oficial de los servidores de Google
+model = "google_ai_studio/gemini-3.8-flash"
+fallback_models = ["google_ai_studio/gemini-3.8-flash"]
 
 [pr_agent]
 fallback_user_language = "es"
 
 [pr_reviewer]
 publish_output = true
+# Desactivamos flujos adicionales que gastan más consultas HTTP para proteger la cuenta gratis
 enable_rest_ness = false
-enable_security_analysis = true
+enable_security_analysis = false
 require_tests_analysis = false
 
-# ... El resto de tus extra_instructions de Java/Spring Boot se quedan igual
-
-
-# Reglas de diseño Java / Spring Boot 3.x
+# Forzamos a la IA a empaquetar e inyectar todas las sugerencias críticas dentro del mismo y único comentario
 extra_instructions = """
-Eres un arquitecto de software senior experto en Java 21 y Spring Boot 3.x. Al revisar los Pull Requests de forma automática, debes auditar estrictamente lo siguiente:
-1. Inyección de Dependencias: No permitas el uso de '@Autowired' en campos o variables. Exige inyección por constructor (preferiblemente usando '@RequiredArgsConstructor' de Lombok).
-2. Capa de Servicios: Verifica que los métodos de escritura/actualización tengan '@Transactional' configurado de manera correcta.
-3. Modernidad de Java: Sugerir el uso de características modernas como Java Streams, Records (para DTOs), bloques de texto y Pattern Matching si simplifican la lectura.
-4. Seguridad (Spring Security): Detectar vulnerabilidades comunes como endpoints desprotegidos o exposición directa de entidades JPA en controladores (exige DTOs).
-5. Control de Excepciones: Valida que los errores se manejen de forma globalizada con '@ControllerAdvice' y '@ExceptionHandler', evitando bloques try-catch vacíos o 'e.printStackTrace()'.
-6. Logging: Asegura el uso de SLF4J (vía '@Slf4j' de Lombok) en lugar de 'System.out.println'.
+Debido a que estamos operando bajo una cuota diaria muy estricta, debes compactar todo tu análisis en UN SOLO COMENTARIO estructurado:
+
+1. **Resumen Breve**: Explica en un máximo de 3 líneas el objetivo de este Pull Request en el microservicio.
+2. **Auditoría Spring Boot 3 & Java 21**: Evalúa si el código cumple estrictamente con:
+   - Inyección por constructor (exige @RequiredArgsConstructor de Lombok en lugar de @Autowired en propiedades).
+   - Uso de la anotación @Transactional en la capa de servicios.
+   - Buenas prácticas de Java moderno (Records para DTOs, Streams).
+   - Control centralizado de errores con @ControllerAdvice.
+3. **Sugerencias y Correcciones**: Si hay algo que corregir, provee el bloque de código corregido formateado en Markdown listo para copiar y pegar. Máximo 2 recomendaciones críticas.
 """
-
-[pr_code_suggestions]
-# Forzamos un límite bajo de sugerencias críticas para proteger tu cuota gratuita de tokens por minuto
-num_code_suggestions = 3
-# Permite aplicar los parches con un solo clic directamente desde la UI de GitHub ("Apply Change")
-committable_code_suggestions = true
-
