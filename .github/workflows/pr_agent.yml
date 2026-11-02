@@ -2,17 +2,13 @@ name: PR-Agent de Qodo (Gemini 3.8 Flash - AUTOMÁTICO RESTRINGIDO)
 
 on:
   pull_request:
-    # SE ELIMINÓ 'synchronize' -> El bot NUNCA volverá a gastar tokens por commits nuevos en un mismo PR
     types: [opened, reopened]
 
 jobs:
   pr_agent_job:
     if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-      contents: write
+    permissions: write-all # Forzamos permisos totales para evitar el error 403 de integraciones
     name: Run PR-Agent
     steps:
       - name: PR-Agent Action
@@ -21,11 +17,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-          # Configuración del modelo Gemini
+          # Configuración básica del modelo
           config.model: "gemini/gemini-3.8-flash"
           config.fallback_models: '["gemini/gemini-3.8-flash"]'
 
-          # CONFIGURACIÓN DE LLAMADA ÚNICA
-          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false" # Desactivado para no duplicar llamadas
-          GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"     # ACTIVADO: Hace la revisión completa y da las sugerencias
-          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"   # Desactivado para no triplicar llamadas
+          # Configuración para evitar Timeouts en cuentas Free de Google
+          # Desactivamos el "reasoning" extendido pesado que tumba la conexión gratis
+          gemini.reasoning_effort: "low"
+
+          # Configuración de llamada única
+          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false"
+          GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"
+          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"

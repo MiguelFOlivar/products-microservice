@@ -1,6 +1,8 @@
 [config]
 model = "gemini/gemini-3.8-flash"
 fallback_models = ["gemini/gemini-3.8-flash"]
+# Forzamos a LiteLLM a no enviar solicitudes de alta demanda de procesamiento
+reasoning_effort = "low"
 
 [pr_agent]
 fallback_user_language = "es"
