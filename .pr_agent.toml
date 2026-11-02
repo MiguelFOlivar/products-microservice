@@ -1,19 +1,17 @@
 [config]
-# Modelo corregido según el requerimiento oficial de los servidores de Google
-model = "google_ai_studio/gemini-3.8-flash"
-fallback_models = ["google_ai_studio/gemini-3.8-flash"]
+# Modelo alternativo con soporte nativo de tokens heredados por el agente
+model = "gemini/gemini-1.5-flash"
+fallback_models = ["gemini/gemini-1.5-flash"]
 
 [pr_agent]
 fallback_user_language = "es"
 
 [pr_reviewer]
 publish_output = true
-# Desactivamos flujos adicionales que gastan más consultas HTTP para proteger la cuenta gratis
 enable_rest_ness = false
 enable_security_analysis = false
 require_tests_analysis = false
 
-# Forzamos a la IA a empaquetar e inyectar todas las sugerencias críticas dentro del mismo y único comentario
 extra_instructions = """
 Debido a que estamos operando bajo una cuota diaria muy estricta, debes compactar todo tu análisis en UN SOLO COMENTARIO estructurado:
 

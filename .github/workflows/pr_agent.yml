@@ -1,31 +1,32 @@
-name: PR-Agent Gemini Automático (Optimizado Gratis)
+name: PR-Agent Gemini Automático
 
 on:
   pull_request:
-    types: [opened, synchronize] # Solo se ejecuta al abrir el PR o cuando subes nuevos commits
+    types: [opened, synchronize]
 
 jobs:
   pr_agent_job:
-    # Evita que se ejecute si el evento lo generó otro Bot para prevenir bucles recurrentes
     if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
+    # 🚨 SOLUCIÓN AL ERROR 403: Forzamos permisos máximos para que el contenedor pueda leer y escribir comentarios
     permissions:
       issues: write
       pull-requests: write
       contents: write
+      statuses: write
     name: Run PR-Agent
     steps:
       - name: PR-Agent action step
-        uses: the-pr-agent/pr-agent@v0.49.0 # Versión fija estable para evitar fallos futuros
+        uses: the-pr-agent/pr-agent@v0.49.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # Sintaxis oficial compatible con las últimas librerías internas de LiteLLM para Google AI Studio
           GOOGLE_AI_STUDIO__GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          model: "google_ai_studio/gemini-3.8-flash"
-          fallback_models: '["google_ai_studio/gemini-3.8-flash"]'
 
-          # 🔥 LA OPTIMIZACIÓN: Solo activamos la revisión (1 sola llamada global al abrir)
+          # Usamos el modelo compatible directo de LiteLLM sin sub-rutas complejas
+          model: "gemini/gemini-1.5-flash"
+          fallback_models: '["gemini/gemini-1.5-flash"]'
+
+          # Una sola llamada optimizada
           github_action.auto_review: "true"
           github_action.auto_describe: "false"
           github_action.auto_improve: "false"
