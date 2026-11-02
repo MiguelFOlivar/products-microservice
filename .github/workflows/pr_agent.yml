@@ -1,4 +1,4 @@
-name: PR-Agent Gemini Automático (Optimizado Gratis)
+name: PR-Agent Gemini Automático
 
 on:
   pull_request:
@@ -8,10 +8,12 @@ jobs:
   pr_agent_job:
     if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
+    # 🚨 SOLUCIÓN AL ERROR 403: Forzamos permisos máximos para que el contenedor pueda leer y escribir comentarios
     permissions:
       issues: write
       pull-requests: write
       contents: write
+      statuses: write
     name: Run PR-Agent
     steps:
       - name: PR-Agent action step
