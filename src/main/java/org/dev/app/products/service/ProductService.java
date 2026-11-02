@@ -74,6 +74,7 @@ public class ProductService {
     }
 
     // Aquì usamos métodos auxiliares para evitar repetir código
+
     //Mapper Product -> ProductResponse
     private ProductResponse toResponse(Product product){
         return new ProductResponse(product.getId(), product.getName(), product.getDescription(),
