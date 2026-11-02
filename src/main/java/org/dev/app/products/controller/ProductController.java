@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<ProductResponse> update(@Valid @RequestParam Long id, @RequestBody ProductRequest request){
+    public ResponseEntity<ProductResponse> update(@RequestParam Long id,@Valid @RequestBody ProductRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(productService.update(id,request));
     }
 
