@@ -21,11 +21,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_AI_STUDIO__GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-          # Modelo estable de alta compatibilidad de cuota
-          CONFIG__MODEL: "gemini/gemini-1.5-flash"
-          CONFIG__FALLBACK_MODELS: '["gemini/gemini-1.5-flash"]'
+          # Nomenclatura nativa compatible con los límites internos de MAX_TOKENS del bot
+          CONFIG__MODEL: "vertex_ai/gemini-1.5-flash"
+          CONFIG__FALLBACK_MODELS: '["vertex_ai/gemini-1.5-flash"]'
 
-          # 🔥 SINTAXIS CORREGIDA: Doble guion bajo y mayúsculas obligatorias
+          # Modo unificado de bajo consumo
           GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"
           GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false"
           GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"
