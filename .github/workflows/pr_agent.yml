@@ -1,8 +1,9 @@
-name: PR-Agent Gemini Automático (Optimizado Gratis)
+name: PR-Agent de Qodo (Gemini 3.8 Flash - AUTOMÁTICO RESTRINGIDO)
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    # SE ELIMINÓ 'synchronize' -> El bot NUNCA volverá a gastar tokens por commits nuevos en un mismo PR
+    types: [opened, reopened]
 
 jobs:
   pr_agent_job:
@@ -12,20 +13,19 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
-      statuses: write
     name: Run PR-Agent
     steps:
-      - name: PR-Agent action step
-        uses: the-pr-agent/pr-agent@v0.49.0
+      - name: PR-Agent Action
+        uses: docker://pragent/pr-agent:0.49.0-github_action
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GOOGLE_AI_STUDIO__GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-          # Nomenclatura nativa compatible con los límites internos de MAX_TOKENS del bot
-          CONFIG__MODEL: "vertex_ai/gemini-1.5-flash"
-          CONFIG__FALLBACK_MODELS: '["vertex_ai/gemini-1.5-flash"]'
+          # Configuración del modelo Gemini
+          config.model: "gemini/gemini-3.8-flash"
+          config.fallback_models: '["gemini/gemini-3.8-flash"]'
 
-          # Modo unificado de bajo consumo
-          GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"
-          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false"
-          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"
+          # CONFIGURACIÓN DE LLAMADA ÚNICA
+          GITHUB_ACTION_CONFIG__AUTO_DESCRIBE: "false" # Desactivado para no duplicar llamadas
+          GITHUB_ACTION_CONFIG__AUTO_REVIEW: "true"     # ACTIVADO: Hace la revisión completa y da las sugerencias
+          GITHUB_ACTION_CONFIG__AUTO_IMPROVE: "false"   # Desactivado para no triplicar llamadas
