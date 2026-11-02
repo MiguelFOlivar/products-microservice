@@ -2,7 +2,7 @@ name: PR-Agent
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review]
+    types: [opened, reopened, ready_for_review, synchronize]
   issue_comment:
     types: [created]
 
@@ -18,19 +18,27 @@ jobs:
     if: ${{ github.event.sender.type != 'Bot' }}
     steps:
       - name: PR Agent action
-        uses: qodo-ai/pr-agent@main
+        uses: the-pr-agent/pr-agent@main
         env:
-          OPENAI.KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Credenciales del repositorio y del Modelo de IA
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI.API_TYPE: "gemini"
           OPENAI.MODEL: "gemini-2.5-flash"
           CONFIG.RESPONSE_LANGUAGE: "es-ES"
 
-          # CORRECCIÓN DE SINTAXIS (Doble 't')
+          # AUTOMATIZACIONES NATIVAS (Faltaba esto para automatizar el trigger)
+          github_action_config.auto_review: "true"
+          github_action_config.auto_describe: "true"
+          github_action_config.auto_improve: "true"
+
+          # Configuración del Comportamiento de Sugerencias
           PR_CODE_SUGGESTIONS.COMMITTABLE_CODE_SUGGESTIONS: "true"
           PR_CODE_SUGGESTIONS.NUM_CODE_SUGGESTIONS: "4"
-
           PR_REVIEWER.ENABLE_REVIEW_LABELS_EFFORT: "true"
           PR_REVIEWER.REQUIRE_REVIEWS_TO_PASS: "false"
+
+          # Tus reglas específicas de Java 25, Spring Boot, MySQL y Capas
           PR_REVIEWER.EXTRA_INSTRUCTIONS: |
             Actúa como un Arquitecto de Software Senior y Mentor. Este es un microservicio en desarrollo para un portafolio, estructurado con una Arquitectura en Capas y persistencia en MySQL. Evalúa el código bajo estas reglas estrictas:
             1) Respeto Estricto de Capas: Verifica que el flujo sea unidireccional (Controller -> Service -> Repository). El Controller no debe llamar al Repository ni manejar lógica de negocio. Las Entities de JPA/MySQL jamás deben exponerse en el Controller; para eso se deben usar los 'record' DTOs.
