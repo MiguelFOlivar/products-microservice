@@ -1,5 +1,4 @@
 [config]
-# Cambiado al estándar mapeado por LiteLLM para inyección automática de límites de tokens
 model = "gemini/gemini-2.5-flash"
 fallback_models = ["gemini/gemini-2.5-flash"]
 
@@ -12,7 +11,6 @@ enable_rest_ness = false
 enable_security_analysis = false
 require_tests_analysis = false
 
-# Obligamos a la IA a empaquetar todas las sugerencias críticas dentro del mismo y único comentario
 extra_instructions = """
 Debido a que estamos operando bajo una cuota diaria muy estricta, debes compactar todo tu análisis en UN SOLO COMENTARIO estructurado:
 
