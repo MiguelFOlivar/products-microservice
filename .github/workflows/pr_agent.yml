@@ -2,7 +2,7 @@ name: PR-Agent
 
 on:
   pull_request:
-    types: [opened, reopened, ready_for_review, synchronize]
+    types: [opened, reopened, ready_for_review]
   issue_comment:
     types: [created]
 
@@ -20,27 +20,26 @@ jobs:
       - name: PR Agent action
         uses: the-pr-agent/pr-agent@main
         env:
-          # Token nativo de GitHub
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # ACTUALIZACIÓN DE MODELO A GEMINI 3.8
+          # Configuración del Modelo Gemini 3.8
           config.model: "gemini/gemini-3.8-flash"
           config.fallback_models: '["gemini/gemini-3.8-flash"]'
           GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CONFIG.RESPONSE_LANGUAGE: "es-ES"
 
-          # Automatizaciones nativas encendidas
+          # OPTIMIZACIÓN DE FLUJO: Evita saturar la API gratuita en el arranque
           github_action_config.auto_review: "true"
           github_action_config.auto_describe: "true"
-          github_action_config.auto_improve: "true"
+          github_action_config.auto_improve: "false" # Se desactiva el automático para evitar el bloqueo por cuota
 
-          # Configuración del Comportamiento de Sugerencias
+          # Configuración de Comportamiento de Sugerencias Manuales
           PR_CODE_SUGGESTIONS.COMMITTABLE_CODE_SUGGESTIONS: "true"
           PR_CODE_SUGGESTIONS.NUM_CODE_SUGGESTIONS: "4"
           PR_REVIEWER.ENABLE_REVIEW_LABELS_EFFORT: "true"
           PR_REVIEWER.REQUIRE_REVIEWS_TO_PASS: "false"
 
-          # Instrucciones del Mentor de Portafolio (Java 25 + MySQL + Capas)
+          # Reglas del Mentor de Portafolio
           PR_REVIEWER.EXTRA_INSTRUCTIONS: |
             Actúa como un Arquitecto de Software Senior y Mentor. Este es un microservicio en desarrollo para un portafolio, estructurado con una Arquitectura en Capas y persistencia en MySQL. Evalúa el código bajo estas reglas estrictas:
             1) Respeto Estricto de Capas: Verifica que el flujo sea unidireccional (Controller -> Service -> Repository). El Controller no debe llamar al Repository ni manejar lógica de negocio. Las Entities de JPA/MySQL jamás deben exponerse en el Controller; para eso se deben usar los 'record' DTOs.
